@@ -84,7 +84,3 @@ The `quickstart/` folder contains a step-by-step guide for setting up and testin
 ## License
 
 This project is licensed under the MIT License.
-
----
-
-Additional documentation, configuration guides, or usage examples can be included here.
