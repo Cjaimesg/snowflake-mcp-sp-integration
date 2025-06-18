@@ -12,8 +12,8 @@ This project simplifies the integration of Snowflake stored procedures with an M
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/username/project-name.git
-cd project-name
+git clone https://github.com/snowflake-mcp-sp-integration.git
+cd snowflake-mcp-sp-integration
 ```
 
 2. Install dependencies using `uv`:
@@ -21,7 +21,6 @@ cd project-name
 ```bash
 uv venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-uv pip install -r requirements.txt
 ```
 
 ## Configuration
@@ -67,7 +66,7 @@ STORED_PROCEDURES = [
       "command": "absolute/path/to/your/uv/uv.exe",
       "args": [
         "--directory",
-        "absolute/path/to/project",
+        "absolute/path/to/snowflake-mcp-sp-integration",
         "run",
         "main.py"
       ]
@@ -76,7 +75,11 @@ STORED_PROCEDURES = [
 }
 ```
 
-> Replace `absolute/path/to/project` with the actual directory where you cloned this repository.
+> Replace `absolute/path/to/snowflake-mcp-sp-integration` with the actual directory where you cloned this repository.
+
+## Quickstart - Setup Guide for Dev Environment
+
+The `quickstart/` folder contains a step-by-step guide for setting up and testing this module in the **Dev Environment**.
 
 ## License
 
