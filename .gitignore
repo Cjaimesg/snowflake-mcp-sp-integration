@@ -1,3 +1,6 @@
+# Python-generated files
+*.py[oc]
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
