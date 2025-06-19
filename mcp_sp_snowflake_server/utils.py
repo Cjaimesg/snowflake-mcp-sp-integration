@@ -6,14 +6,17 @@ from snowflake.snowpark import DataFrame as SnowparkDataFrame
 
 from .connection import get_connection
 
+
 @singledispatch
 def render_output(arg):
     return arg
+
 
 @render_output.register
 def _(arg: SnowparkDataFrame):
     pdf = arg.to_pandas()
     return pdf.to_markdown(index=False)
+
 
 def validate_sp_name(sp_name: str) -> bool:
     pattern = r'^[a-zA-Z_][\w]*\.[a-zA-Z_][\w]*\.[a-zA-Z_][\w]*$'
@@ -21,12 +24,14 @@ def validate_sp_name(sp_name: str) -> bool:
         return True
     raise ValueError(f"The stored procedure name {sp_name} is not valid.")
 
+
 def split_sp_name(sp_name: str) -> tuple:
     pattern = r'^(?P<db>[a-zA-Z_][\w]*)\.(?P<schema>[a-zA-Z_][\w]*)\.(?P<name>[a-zA-Z_][\w]*)$'
     match = re.match(pattern, sp_name.strip())
     if not match:
         raise ValueError("Invalid format.")
     return match.group('db'), match.group('schema'), match.group('name')
+
 
 def validate_sp_exists(full_sp_name: str) -> bool:
     conn = get_connection()
@@ -41,6 +46,7 @@ def validate_sp_exists(full_sp_name: str) -> bool:
     finally:
         cursor.close()
         conn.close()
+
 
 def get_sp_documentation(sp_name):
     conn = get_connection()

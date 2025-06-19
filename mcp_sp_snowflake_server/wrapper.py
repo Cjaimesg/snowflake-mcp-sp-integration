@@ -28,4 +28,3 @@ def create_sp_function(sp_name):
     function.__name__ = sp_name.replace('.', '_').lower()
     function.__doc__ = docstring
     return mcp.tool()(function)
-

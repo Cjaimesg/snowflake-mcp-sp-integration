@@ -62,7 +62,7 @@ STORED_PROCEDURES = [
 ```json
 {
   "mcpServers": {
-    "mix_server": {
+    "snowflake_sp_server": {
       "command": "absolute/path/to/your/uv/uv.exe",
       "args": [
         "--directory",

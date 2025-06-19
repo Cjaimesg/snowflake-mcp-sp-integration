@@ -325,29 +325,6 @@ wheels = [
 ]
 
 [[package]]
-name = "mix-server"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "mcp", extra = ["cli"] },
-    { name = "pandas" },
-    { name = "pyarrow" },
-    { name = "snowflake-connector-python" },
-    { name = "snowflake-snowpark-python" },
-    { name = "tabulate" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "mcp", extras = ["cli"], specifier = ">=1.9.2" },
-    { name = "pandas", specifier = ">=2.2.3" },
-    { name = "pyarrow", specifier = ">=20.0.0" },
-    { name = "snowflake-connector-python", specifier = ">=3.15.0" },
-    { name = "snowflake-snowpark-python", specifier = ">=1.32.0" },
-    { name = "tabulate", specifier = ">=0.9.0" },
-]
-
-[[package]]
 name = "numpy"
 version = "2.2.6"
 source = { registry = "https://pypi.org/simple" }
@@ -793,6 +770,29 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/85/c2/07ad6424cd6add555060a7d558881dbf0cdaccea946a6d2fe68be9e60fa9/snowflake_snowpark_python-1.32.0.tar.gz", hash = "sha256:de85c4c263adfd479b3f787660890e59dd51b5e08135d788ae7fdcb53a2be2c1", size = 1570419, upload-time = "2025-05-15T18:22:58.241Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f3/97/af6b66f6c5b8c20ef53915a5e955dee69d1240451fe7f5b10583994d8320/snowflake_snowpark_python-1.32.0-py3-none-any.whl", hash = "sha256:607ffaba88efc4b92b5cc5f30456a44dbfbc075fa64a33b4bc32762b16117268", size = 1622750, upload-time = "2025-05-15T18:22:56.473Z" },
+]
+
+[[package]]
+name = "snowflake-sp-server"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "mcp", extra = ["cli"] },
+    { name = "pandas" },
+    { name = "pyarrow" },
+    { name = "snowflake-connector-python" },
+    { name = "snowflake-snowpark-python" },
+    { name = "tabulate" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "mcp", extras = ["cli"], specifier = ">=1.9.2" },
+    { name = "pandas", specifier = ">=2.2.3" },
+    { name = "pyarrow", specifier = ">=20.0.0" },
+    { name = "snowflake-connector-python", specifier = ">=3.15.0" },
+    { name = "snowflake-snowpark-python", specifier = ">=1.32.0" },
+    { name = "tabulate", specifier = ">=0.9.0" },
 ]
 
 [[package]]
