@@ -1,30 +1,31 @@
-from .utils import obtener_documentacion_sp, render_output
+from .utils import get_sp_documentation, render_output
 from .connection import get_session
 from server import mcp
 
 
-def crear_funcion_sp(nombre_sp):
-    docstring = obtener_documentacion_sp(nombre_sp)
+def create_sp_function(sp_name):
+    docstring = get_sp_documentation(sp_name)
 
-    def funcion(*args, **kwargs):
+    def function(*args, **kwargs):
         session = get_session()
         try:
             if not args and 'args' in kwargs:
                 args = kwargs['args']
                 if not isinstance(args, (list, tuple)):
                     args = [args]
-            print(f"Llamando a {nombre_sp} con argumentos: {args}")
-            return render_output(session.call(nombre_sp, *args))
+            print(f"Calling {sp_name} with arguments: {args}")
+            return render_output(session.call(sp_name, *args))
         finally:
             session.close()
 
     docstring += (
         "\n\n"
-        "Instrucciones de uso:\n"
-        "- Si se van a pasar múltiples argumentos, deben colocarse dentro de una lista o tupla.\n"
-        "- Ejemplo: funcion(args=[valor1, valor2, valor3])\n"
-        "- También se puede pasar un único valor como lista de un solo elemento: funcion(args=[valor])\n"
-        )
-    funcion.__name__ = nombre_sp.replace('.', '_').lower()
-    funcion.__doc__ = docstring
-    return mcp.tool()(funcion)
+        "Usage instructions:\n"
+        "- If passing multiple arguments, they must be provided in a list or tuple.\n"
+        "- Example: function(args=[value1, value2, value3])\n"
+        "- A single value can also be passed as a single-element list: function(args=[value])\n"
+    )
+    function.__name__ = sp_name.replace('.', '_').lower()
+    function.__doc__ = docstring
+    return mcp.tool()(function)
+

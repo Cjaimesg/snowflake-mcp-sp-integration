@@ -6,70 +6,64 @@ from snowflake.snowpark import DataFrame as SnowparkDataFrame
 
 from .connection import get_connection
 
-
 @singledispatch
 def render_output(arg):
     return arg
-
 
 @render_output.register
 def _(arg: SnowparkDataFrame):
     pdf = arg.to_pandas()
     return pdf.to_markdown(index=False)
 
-
-def validar_nombre_sp(nombre_sp: str) -> bool:
-    patron = r'^[a-zA-Z_][\w]*\.[a-zA-Z_][\w]*\.[a-zA-Z_][\w]*$'
-    if re.match(patron, nombre_sp.strip()):
+def validate_sp_name(sp_name: str) -> bool:
+    pattern = r'^[a-zA-Z_][\w]*\.[a-zA-Z_][\w]*\.[a-zA-Z_][\w]*$'
+    if re.match(pattern, sp_name.strip()):
         return True
-    raise ValueError(f"El nombre del stored procedure {nombre_sp} no es válido.")
+    raise ValueError(f"The stored procedure name {sp_name} is not valid.")
 
-
-def split_nombre_sp(nombre_sp: str) -> tuple:
-    patron = r'^(?P<db>[a-zA-Z_][\w]*)\.(?P<schema>[a-zA-Z_][\w]*)\.(?P<name>[a-zA-Z_][\w]*)$'
-    match = re.match(patron, nombre_sp.strip())
+def split_sp_name(sp_name: str) -> tuple:
+    pattern = r'^(?P<db>[a-zA-Z_][\w]*)\.(?P<schema>[a-zA-Z_][\w]*)\.(?P<name>[a-zA-Z_][\w]*)$'
+    match = re.match(pattern, sp_name.strip())
     if not match:
-        raise ValueError("Formato inválido.")
+        raise ValueError("Invalid format.")
     return match.group('db'), match.group('schema'), match.group('name')
 
-
-def validar_sp_existe(nombre_sp_completo: str) -> bool:
+def validate_sp_exists(full_sp_name: str) -> bool:
     conn = get_connection()
-    validar_nombre_sp(nombre_sp_completo)
-    db, schema, nombre_sp = split_nombre_sp(nombre_sp_completo)
-    sql_base = f"SHOW PROCEDURES LIKE '{nombre_sp}' IN SCHEMA {db}.{schema}"
+    validate_sp_name(full_sp_name)
+    db, schema, sp_name = split_sp_name(full_sp_name)
+    sql_query = f"SHOW PROCEDURES LIKE '{sp_name}' IN SCHEMA {db}.{schema}"
     try:
         cursor = conn.cursor()
-        cursor.execute(sql_base)
-        resultado = cursor.fetchone()
-        return resultado is not None
+        cursor.execute(sql_query)
+        result = cursor.fetchone()
+        return result is not None
     finally:
         cursor.close()
         conn.close()
 
-
-def obtener_documentacion_sp(nombre_sp):
+def get_sp_documentation(sp_name):
     conn = get_connection()
-    validar_sp_existe(nombre_sp)
-    db, schema, nombre_sp = split_nombre_sp(nombre_sp)
-    sql_base = f"SHOW PROCEDURES LIKE '{nombre_sp}' IN SCHEMA {db}.{schema}"
+    validate_sp_exists(sp_name)
+    db, schema, sp_name = split_sp_name(sp_name)
+    sql_query = f"SHOW PROCEDURES LIKE '{sp_name}' IN SCHEMA {db}.{schema}"
     try:
-        result = pd.read_sql(sql_base, conn)
+        result = pd.read_sql(sql_query, conn)
         if result.empty:
-            return f"No se encontraron procedimientos con el nombre '{nombre_sp}'"
-        documentacion_completa = []
-        documentacion_completa.append(f"=== PROCEDIMIENTOS ENCONTRADOS: {nombre_sp} ===")
-        documentacion_completa.append(f"Base de datos: {db}")
-        documentacion_completa.append(f"Esquema: {schema}")
-        documentacion_completa.append(f"Total: {len(result)}\n")
+            return f"No procedures found with the name '{sp_name}'"
+        full_doc = []
+        full_doc.append(f"=== PROCEDURES FOUND: {sp_name} ===")
+        full_doc.append(f"Database: {db}")
+        full_doc.append(f"Schema: {schema}")
+        full_doc.append(f"Total: {len(result)}\n")
         for index, row in result.iterrows():
             version_doc = [
-                f"--- VERSIÓN {index + 1} ---",
-                f"Nombre: {row.get('name', nombre_sp)}",
-                f"Descripción: {row.get('description', 'No disponible')}",
-                f"Argumentos: {row.get('arguments', 'No disponibles')}\n"
+                f"--- VERSION {index + 1} ---",
+                f"Name: {row.get('name', sp_name)}",
+                f"Description: {row.get('description', 'Not available')}",
+                f"Arguments: {row.get('arguments', 'Not available')}\n"
             ]
-            documentacion_completa.extend(version_doc)
-        return '\n'.join(documentacion_completa)
+            full_doc.extend(version_doc)
+        return '\n'.join(full_doc)
     finally:
         conn.close()

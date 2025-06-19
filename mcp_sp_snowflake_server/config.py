@@ -7,7 +7,7 @@ load_dotenv()
 def get_env_var(key: str, required: bool = True) -> str:
     value = os.getenv(key)
     if required and not value:
-        raise EnvironmentError(f"La variable de entorno {key} es requerida pero no está definida.")
+        raise EnvironmentError(f"The environment variable {key} is required but not defined.")
     return value
 
 
