@@ -50,9 +50,13 @@ Example:
 
 ```python
 STORED_PROCEDURES = [
-    "DB.SCH.SP_NAME",
-    "DB.SCH.SP_NAME_2"
-]
+  "DB.SCH.SP_NAME",
+  "DB.SCH.SP_NAME_2"
+  ]
+
+SCHEMAS = [
+  "DB.OTHER_SCHEMA"
+  ]
 ```
 
 > Replace the example entries with your actual stored procedures.

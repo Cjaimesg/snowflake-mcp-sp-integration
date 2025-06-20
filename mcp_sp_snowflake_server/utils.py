@@ -32,6 +32,7 @@ def split_sp_name(sp_name: str) -> tuple:
         raise ValueError("Invalid format.")
     return match.group('db'), match.group('schema'), match.group('name')
 
+
 def split_schema_name(schema_name: str) -> tuple:
     pattern = r'^(?P<db>[a-zA-Z_][\w]*)\.(?P<schema>[a-zA-Z_][\w]*)$'
     match = re.match(pattern, schema_name.strip())
