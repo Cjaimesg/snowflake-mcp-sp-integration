@@ -44,6 +44,17 @@ AS '
   return "Received message: " + MESSAGE_1 + " and additional text: " + MESSAGE_2
 ';
 
+CREATE OR REPLACE PROCEDURE RETURN_MESSAGE()
+RETURNS VARCHAR
+LANGUAGE JAVASCRIPT
+COMMENT='This procedure returns a message. 
+Output text is: Confirmation message'
+EXECUTE AS CALLER
+AS '
+  return "This is a confirmation message from the RETURN_MESSAGE procedure."
+';
+
 GRANT USAGE ON PROCEDURE SOME_TABLE(VARCHAR, INT) TO ROLE sample_mcp_role;
 GRANT USAGE ON PROCEDURE SAMPLE_MESAGE(VARCHAR) TO ROLE sample_mcp_role;
 GRANT USAGE ON PROCEDURE SAMPLE_MESAGE(VARCHAR, VARCHAR) TO ROLE sample_mcp_role;
+GRANT USAGE ON PROCEDURE RETURN_MESSAGE() TO ROLE sample_mcp_role;
