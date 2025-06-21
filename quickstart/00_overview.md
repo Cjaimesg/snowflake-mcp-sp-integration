@@ -19,11 +19,8 @@ This set of files sets up a demonstration environment in Snowflake to validate t
   - Two versions of `SAMPLE_MESAGE`: one with a single parameter and one with two parameters.
 - **Key Note**: Some procedures are deliberately created more than once (with different signatures) to demonstrate that MCP can handle such cases without errors or conflicts.
 
-### 3. `03_sps_config.py`
-- Lists the stored procedures to be used by the MCP:
-  - `SOME_TABLE`
-  - `SAMPLE_MESAGE`
-- Specifies their full path in the database for proper reference.
+### 3. `03_server_config.md`
+- Documents how to configure the MCP integration to load and expose stored procedures via CLI arguments.
 
 ### 4. `04_cleanup.sql`
 - Cleans up the test environment by removing:
