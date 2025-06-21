@@ -1,14 +1,33 @@
 import hashlib
+import argparse
+
 from server import mcp
 
 from mcp_sp_snowflake_server.wrapper import create_sp_function
 from mcp_sp_snowflake_server.utils import get_list_of_sps
-from mcp_sp_snowflake_server.sps_config import STORED_PROCEDURES as CONFIGURED_SPS, SCHEMAS
+
 
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Run Snowflake SP server")
+    parser.add_argument(
+        "--schemas",
+        nargs="+",
+        default=[],
+        help="List of schemas to load stored procedures from (e.g., DB1.SCHEMA1 DB2.SCHEMA2)"
+    )
+    parser.add_argument(
+        "--procedures",
+        nargs="*",
+        default=[],
+        help="Optional list of fully qualified stored procedures (e.g., DB1.SCHEMA1.PROC1 DB2.SCHEMA2.PROC2)"
+    )
+    return parser.parse_args()
 
 
 def generate_safe_function_name(name_sp: str) -> str:
@@ -17,9 +36,11 @@ def generate_safe_function_name(name_sp: str) -> str:
     return f"{base_name}_{hash_suffix}"
 
 
-collected_sps = CONFIGURED_SPS.copy()
+args = parse_arguments()
 
-for name_schema in SCHEMAS:
+collected_sps = args.procedures.copy()
+
+for name_schema in args.schemas:
     try:
         sp_list = get_list_of_sps(name_schema)
         if sp_list:
