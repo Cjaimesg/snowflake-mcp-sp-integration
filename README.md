@@ -40,28 +40,7 @@ SNOWFLAKE_HOST=<xxx>-<xxx>.snowflakecomputing.com
 
 > All variables are mandatory and must be defined by the user.
 
-2. Define the stored procedures to be managed by the MCP server in the following file:
-
-```
-mcp_sp_snowflake_server/sps_config.py
-```
-
-Example:
-
-```python
-STORED_PROCEDURES = [
-  "DB.SCH.SP_NAME",
-  "DB.SCH.SP_NAME_2"
-  ]
-
-SCHEMAS = [
-  "DB.OTHER_SCHEMA"
-  ]
-```
-
-> Replace the example entries with your actual stored procedures.
-
-3. Configure the project as an MCP server. In your MCP configuration file, add an entry like the following, adjusting the paths to match your local environment. Both --schemas and --procedures are optional and default to empty lists.
+2. Configure the project as an MCP server. In your MCP configuration file, add an entry like the following, adjusting the paths to match your local environment. Both --schemas and --procedures are optional and default to empty lists.
 
 ```json
 {
