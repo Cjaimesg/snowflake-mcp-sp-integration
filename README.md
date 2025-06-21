@@ -61,7 +61,7 @@ SCHEMAS = [
 
 > Replace the example entries with your actual stored procedures.
 
-3. Configure the project as an MCP server. In your MCP configuration file, add an entry like the following, adjusting the paths to match your local environment:
+3. Configure the project as an MCP server. In your MCP configuration file, add an entry like the following, adjusting the paths to match your local environment. Both --schemas and --procedures are optional and default to empty lists.
 
 ```json
 {
@@ -72,7 +72,11 @@ SCHEMAS = [
         "--directory",
         "absolute/path/to/snowflake-mcp-sp-integration",
         "run",
-        "main.py"
+        "main.py",
+        "--schemas",
+        "DB_NAME.SCHEMA_NAME",
+        "--procedures",
+        "DB_NAME.SCHEMA_NAME.PROCEDURE_NAME"
       ]
     }
   }
