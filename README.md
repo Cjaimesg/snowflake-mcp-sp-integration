@@ -42,6 +42,9 @@ SNOWFLAKE_HOST=<xxx>-<xxx>.snowflakecomputing.com
 
 2. Configure the project as an MCP server. In your MCP configuration file, add an entry like the following, adjusting the paths to match your local environment. Both --schemas and --procedures are optional and default to empty lists.
 
+ - Schemas: All store procedures in the specified schemas will be available to the MCP server.
+ - Procedures: Only the specified procedures will be available to the MCP server.
+
 ```json
 {
   "mcpServers": {
@@ -55,7 +58,7 @@ SNOWFLAKE_HOST=<xxx>-<xxx>.snowflakecomputing.com
         "--schemas",
         "DB_NAME.SCHEMA_NAME",
         "--procedures",
-        "DB_NAME.SCHEMA_NAME.PROCEDURE_NAME"
+        "DB_NAME.OTHER_SCHEMA_NAME.PROCEDURE_NAME"
       ]
     }
   }
