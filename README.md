@@ -12,7 +12,7 @@ This project simplifies the integration of Snowflake stored procedures with an M
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/snowflake-mcp-sp-integration.git
+git clone https://github.com/Cjaimesg/snowflake-mcp-sp-integration.git
 cd snowflake-mcp-sp-integration
 ```
 
