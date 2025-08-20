@@ -1,7 +1,7 @@
 [project]
 name = "snowflake_sp_server"
 version = "0.1.0"
-description = "Add your description here"
+description = "Snowflake Stored Procedure Integration with MCP Server"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -11,4 +11,26 @@ dependencies = [
     "snowflake-connector-python>=3.15.0",
     "snowflake-snowpark-python>=1.32.0",
     "tabulate>=0.9.0",
+    "python-dotenv>=1.0.0",
 ]
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+
+[tool.mypy]
+python_version = "3.12"
+check_untyped_defs = true
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true

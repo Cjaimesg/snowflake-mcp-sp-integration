@@ -4,7 +4,7 @@ This project simplifies the integration of Snowflake stored procedures with an M
 
 ## Requirements
 
-- Python 3.8 or higher
+- Python 3.12 or higher
 - [`uv`](https://github.com/astral-sh/uv) installed
 
 ## Installation
@@ -21,11 +21,18 @@ cd snowflake-mcp-sp-integration
 ```bash
 uv venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uv pip install -r requirements.txt
+```
+
+Or install directly with uv:
+
+```bash
+uv pip install .
 ```
 
 ## Configuration
 
-1. Create a `.env` file in the root directory (do not commit this file). Define all required Snowflake credentials:
+1. Copy the `.env.example` file to `.env` in the root directory (do not commit this file). Define all required Snowflake credentials:
 
 ```
 SNOWFLAKE_ACCOUNT=<xxx>-<xxx>
@@ -66,6 +73,14 @@ SNOWFLAKE_HOST=<xxx>-<xxx>.snowflakecomputing.com
 ```
 
 > Replace `absolute/path/to/snowflake-mcp-sp-integration` with the actual directory where you cloned this repository.
+
+## Usage
+
+You can run the server directly with:
+
+```bash
+uv run main.py --schemas DB_NAME.SCHEMA_NAME --procedures DB_NAME.OTHER_SCHEMA_NAME.PROCEDURE_NAME
+```
 
 ## Quickstart - Setup Guide for Dev Environment
 
